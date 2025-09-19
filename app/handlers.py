@@ -3,7 +3,7 @@ from aiogram.filters.command import Command
 from app.state import stop_event
 from validators import validate
 from aiogram import F, types, Router
-from youtube_service import get_video_info
+from youtube_service import get_video_info, format_duration
 
 router = Router()
 
@@ -30,10 +30,7 @@ async def handle_text(message: types.Message):
         await message.answer("Ссылка не на YouTube. Поддерживаю только youtube.com и youtu.be.")
     try:
         info = get_video_info(video_id)
-        dur = info.get("duration") or 0
-        mm = dur // 60
-        ss = dur % 60
-        caption = f"Нашёл видео:\n{info.get('title')}\nДлительность: {mm:02d}:{ss:02d}"
+        caption = f"Нашёл видео:\n{info['title']}\nДлительность: {format_duration(info.get('duration'))}"
 
         await message.answer(caption)
 
