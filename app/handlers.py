@@ -32,7 +32,7 @@ async def handle_text(message: types.Message):
         info = get_video_info(video_id)
         caption = f"Нашёл видео:\n{info['title']}\nДлительность: {format_duration(info.get('duration'))}"
 
-        await message.answer(caption)
+        await message.answer_photo(photo=info["thumbnail"], caption=caption)
 
     except Exception as e:
         await message.answer("Не удалось получить информацию о видео. Попробуй другую ссылку.")

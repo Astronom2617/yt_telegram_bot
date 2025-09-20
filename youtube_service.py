@@ -17,11 +17,12 @@ def get_video_info(video_id):
 
     with YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(url, download=False)
+        thumbnail_url = info.get("thumbnail")
 
     result = {
         "title": info["title"],
         "duration": info["duration"],
-        "thumbnail": info["thumbnail"],
+        "thumbnail": info.get("thumbnail"),
     }
     return result
 
