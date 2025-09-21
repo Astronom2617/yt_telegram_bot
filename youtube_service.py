@@ -22,7 +22,7 @@ def get_video_info(video_id):
     result = {
         "title": info["title"],
         "duration": info["duration"],
-        "thumbnail": info.get("thumbnail"),
+        "thumbnail": thumbnail_url
     }
     return result
 

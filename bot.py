@@ -1,7 +1,7 @@
 import asyncio
 import logging
 import contextlib
-from aiogram import Bot, Dispatcher, types
+from aiogram import Bot, Dispatcher
 from config import TOKEN
 from app.handlers import router
 from app.state import stop_event
