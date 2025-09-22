@@ -3,7 +3,7 @@ import asyncio
 import logging.config, os
 import contextlib
 from aiogram import Bot, Dispatcher
-from config import TOKEN
+from config import BOT_TOKEN
 from app.handlers import router
 from app.state import stop_event
 
@@ -12,7 +12,7 @@ logging.config.fileConfig("logging.conf", disable_existing_loggers=False)
 logger = logging.getLogger(__name__)
 logger.info("Starting bot...")
 
-bot = Bot(token=TOKEN)
+bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
 async def main():
