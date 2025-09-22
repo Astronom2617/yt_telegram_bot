@@ -6,7 +6,7 @@ from app.state import stop_event
 from validators import validate
 from aiogram import F, Router
 from aiogram.types import Message, CallbackQuery, FSInputFile
-from youtube_service import get_video_info, format_duration, download_audio, download_video
+from youtube_service import get_video_info, format_duration, download_audio, download_video, human_size
 import app.keyboards as kb
 from pathlib import Path
 from aiogram.exceptions import TelegramAPIError
@@ -26,7 +26,29 @@ async def start_command(message: Message):
 📸 Показывать превью и длительность ролика   
 
 Просто пришли мне ссылку с YouTube — и выбери нужный формат. 🚀
-""")
+""", reply_markup=kb.main)
+
+
+
+# HELP COMMAND
+@router.message(Command('help'))
+@router.message(F.text == "ℹ️ Помощь")
+async def help_command(message: Message):
+    await message.answer('''ℹ️ Как пользоваться ботом:
+
+1️⃣ Пришли ссылку на YouTube.  
+2️⃣ Бот покажет название, превью и длительность ролика.  
+3️⃣ Выбери формат:
+   • 🎬 Видео (720p или 1080p)  
+   • 🎧 Аудио (MP3)
+
+📦 После обработки бот отправит файл прямо сюда.  
+⏱ Время скачивания зависит от длины и качества ролика.
+
+⚠️ Ограничения Telegram:
+- видео больше ~50 МБ могут не отправляться как видео, будут отправлены как документ.  
+- очень длинные ролики могут обрабатываться дольше.
+''')
 
 # STOP COMMAND
 @router.message(Command('stop'))
@@ -46,7 +68,7 @@ async def handle_text(message: Message):
         await message.answer("Ссылка не на YouTube. Поддерживаю только youtube.com и youtu.be.")
     try:
         info = get_video_info(video_id)
-        caption = f"Нашёл видео:\nНазвание: {info['title']}\nДлительность: {format_duration(info.get('duration'))}"
+        caption = f"📹 Нашёл видео!\n\n🎬 Название: {info['title']}\n⏳ Длительность: {format_duration(info.get('duration'))}\n\n📦 Размеры файлов (примерно):\n- 720p: ~{human_size(info.get('size_720'))}\n- 1080p: ~{human_size(info.get('size_1080'))}\n- MP3 (аудио): ~{human_size(info.get('size_audio'))}"
 
         await message.answer_photo(photo=info["thumbnail"], caption=caption, reply_markup=kb.build_download_kb(video_id))
 

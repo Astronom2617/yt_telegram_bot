@@ -9,12 +9,21 @@ def format_duration(seconds):
     m = (seconds % 3600) // 60
     s = seconds % 60
     if h > 0:
-        return f'{h} hour(s) {m} minute(s) {s} second(s)'
+        return f'{h} час {m} минут {s} секунд'
     elif h == 0 and m > 0:
-        return f'{m} minute(s) {s} second(s)'
+        return f'{m} минут {s} секунд'
     elif h == 0 and m == 0:
-        return f'{s} second(s)'
+        return f'{s} секунд'
 
+def human_size(size_bytes):
+    if not size_bytes:
+        return "—"
+    gb = size_bytes // (1024 ** 3)
+    mb = (size_bytes % (1024 ** 3)) // (1024 ** 2)
+    if gb > 0:
+        return f"{gb} GB {mb} MB"
+    else:
+        return f"{mb} MB"
 
 def get_video_info(video_id):
     url = f"https://www.youtube.com/watch?v={video_id}"
@@ -33,7 +42,7 @@ def get_video_info(video_id):
         size_audio = None
 
         for f in formats:
-            if f.get("height") == 720 and f.get("ext") == "mp4":
+            if f.get("height") == 720 and f.get("ext") == "webm":
                 size_720 = f.get("filesize") or f.get("filesize_approx")
             elif f.get("height") == 1080 and f.get("ext") == "mp4":
                 size_1080 = f.get("filesize") or f.get("filesize_approx")
@@ -46,7 +55,10 @@ def get_video_info(video_id):
         "thumbnail": thumbnail_url,
         "size_720": size_720,
         "size_1080": size_1080,
-        "size_audio": size_audio
+        "size_audio": size_audio,
+        "size_720_text": human_size(size_720),
+        "size_1080_text": human_size(size_1080),
+        "size_audio_text": human_size(size_audio),
     }
     return result
 

@@ -1,6 +1,11 @@
 #KEYBOARDS
 
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.types import (InlineKeyboardButton, InlineKeyboardMarkup,
+                            ReplyKeyboardMarkup, KeyboardButton)
+
+main = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='ℹ️ Помощь')]
+], resize_keyboard=True)
 
 def build_download_kb(video_id):
     kb = InlineKeyboardMarkup(inline_keyboard=[

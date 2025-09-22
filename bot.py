@@ -1,11 +1,16 @@
 #RUNNING FILE
 import asyncio
-import logging
+import logging.config, os
 import contextlib
 from aiogram import Bot, Dispatcher
 from config import TOKEN
 from app.handlers import router
 from app.state import stop_event
+
+os.makedirs("logs", exist_ok=True)
+logging.config.fileConfig("logging.conf", disable_existing_loggers=False)
+logger = logging.getLogger(__name__)
+logger.info("Starting bot...")
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
@@ -19,7 +24,6 @@ async def main():
         await polling_task
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO)
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
