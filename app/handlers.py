@@ -1,6 +1,7 @@
 from aiogram.filters.command import Command
 
 import asyncio
+import os
 
 from app.state import stop_event
 from validators import validate
@@ -27,8 +28,6 @@ async def start_command(message: Message):
 
 Просто пришли мне ссылку с YouTube — и выбери нужный формат. 🚀
 """, reply_markup=kb.main)
-
-
 
 # HELP COMMAND
 @router.message(Command('help'))
@@ -116,19 +115,25 @@ async def handle_download(callback: CallbackQuery):
                 return
 
             await callback.message.answer("Готовлю файл… это может занять пару минут.")
-            try:
-                file_path = await asyncio.to_thread(download_video, video_id, q)
-            except (DownloadError, ExtractorError):
-                await callback.message.answer("Не удалось скачать видео в выбранном качестве. Попробуй другое.")
-                return
-            except Exception:
-                await callback.message.answer("Сбой при скачивании видео.")
-                return
+
+            file_path = await asyncio.to_thread(download_video, video_id, q)
 
             try:
-                await callback.message.answer_video(FSInputFile(file_path))
+                size_bytes = os.path.getsize(file_path)
+                size_mb = round(size_bytes / (1024 * 1024), 2)
+
+                if size_bytes <= 49 * 1024 * 1024:
+                    await callback.message.answer_video(FSInputFile(file_path))
+                elif size_bytes <= 2000 * 1024 * 1024:
+                    await callback.message.answer_document(FSInputFile(file_path))
+                else:
+                    await callback.message.answer(
+                        f"⚠️ Файл слишком большой для Telegram "
+                        f"(~{size_mb} MB). Попробуй другое качество или только аудио."
+                    )
+
             except TelegramAPIError:
-                await callback.message.answer_document(FSInputFile(file_path))
+                await callback.message.answer("Ошибка Telegram API при отправке файла.")
             return
 
         else:

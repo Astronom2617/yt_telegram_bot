@@ -1,7 +1,7 @@
 # 🎬 YouTube Downloader Bot  
 
-A Telegram bot for downloading YouTube videos and audio.  
-Supports quality selection, shows preview, duration, and approximate file size.  
+**_A Telegram bot for downloading YouTube videos and audio.  
+Supports quality selection, shows preview, duration, and approximate file size._**  
 
 ---
 
@@ -24,51 +24,64 @@ Supports quality selection, shows preview, duration, and approximate file size.
 
 ## 📂 Project Structure  
 yt_telegram_bot/
+
 │── app/
-│ ├── handlers.py # command handlers
-│ ├── keyboards.py # inline & reply keyboards
-│ ├── state.py # bot states
-│── youtube_service.py # downloading & video info logic
-│── validators.py # URL validation
-│── config.py # configuration
-│── bot.py # entry point
-│── requirements.txt # dependencies
-│── README.md # documentation
+
+│ ├── handlers.py _# command handlers_
+
+│ ├── keyboards.py _# inline & reply keyboards_
+
+│ ├── state.py _# bot states_
+
+│── youtube_service.py _# downloading & video info logic_
+
+│── validators.py _# URL validation_
+
+│── config.py _# configuration_
+
+│── bot.py _# entry point_
+
+│── requirements.txt _# dependencies_
+
+│── README.md _# documentation_
 
 ---
 ## ⚡ Installation & Usage
-1. Clone the repository:  
+1. **Clone the repository:** 
    ```bash
    git clone https://github.com/your-username/yt_telegram_bot.git
    cd yt_telegram_bot
-2. Install dependencies:
+2. **Install dependencies:**
    ```bash
    pip install -r requirements.txt
-3. Install FFmpeg
-4. Create a .env file with your bot token:
+3. **Install FFmpeg**
+4. **Create a .env file with your bot token:**
    ```bash
    BOT_TOKEN=your_token_here
-5. Run the bot:
+5. **Run the bot:**
    ```bash
    python bot.py
 
 ---
 ## 🎯 Example Output
-📹 Found a video!
-🎬 Title: the FUN way to learn programming
-⏳ Duration: 12 minutes 07 seconds
-📦 File sizes (approx.):
+📹 **Found a video!**
+
+🎬 **Title:** the FUN way to learn programming
+
+⏳ **Duration:** 12 minutes 07 seconds
+
+📦 **File sizes (approx.):**
 - 720p: ~32 MB
 - 1080p: ~43 MB
 - MP3 (audio): ~10 MB
 
 ---
 ## 📌 TODO / Roadmap
- Add playlist support
- Implement download progress bar
- Deploy bot to run 24/7 on a server
- Improve logging system
+- _Add playlist support_
+- _Implement download progress bar_
+- _Deploy bot to run 24/7 on a server_
+- _Improve logging system_
 
 ---
 ## Author
-Astro2617 🚀
+**Astro2617 🚀**
